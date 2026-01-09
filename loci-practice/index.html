@@ -3,61 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loci Method Trainer</title>
-    <style>
-        body { font-family: sans-serif; background: #f0f2f5; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .room-container { 
-            position: relative; width: 100%; max-width: 600px; height: 400px; 
-            background: #fff; border: 4px solid #333; border-radius: 15px; 
-            background-image: linear-gradient(to bottom, #e0e0e0 50%, #c0c0c0 50%);
-            background-size: 100% 100%;
-        }
-        .furniture {
-            position: absolute; background: #8d6e63; border-radius: 5px;
-            display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;
-        }
-        /* Positions of "Loci" (Locations) */
-        #spot1 { top: 20px; left: 20px; width: 100px; height: 150px; } /* Wardrobe */
-        #spot2 { bottom: 20px; left: 50px; width: 200px; height: 100px; } /* Bed */
-        #spot3 { top: 50px; right: 20px; width: 80px; height: 80px; } /* Desk */
-        #spot4 { bottom: 100px; right: 50px; width: 60px; height: 60px; } /* Chair */
-
-        .input-area { margin-top: 20px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .memory-item { color: #ffeb3b; text-shadow: 1px 1px 2px #000; font-size: 16px; text-align: center; }
-        button { padding: 10px 20px; background: #1a73e8; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    <title>Loci Level 1</title>
+    <link rel="stylesheet" href="style.css"> <style>
+        body { font-family: sans-serif; text-align: center; background: #f0f2f5; }
+        .map { width: 300px; height: 300px; border: 2px solid #333; margin: 20px auto; position: relative; background: #fff; }
+        .spot { position: absolute; width: 60px; height: 60px; background: #ddd; border: 1px solid #999; cursor: pointer; }
+        #s1 { top: 10px; left: 120px; } /* Door */
+        #s2 { top: 120px; right: 10px; } /* Mirror */
+        #s3 { bottom: 10px; left: 120px; } /* Shoe Rack */
+        .hidden { color: transparent; background: #333; }
+        .revealed { color: black; background: #fff; }
+        button { padding: 10px; margin: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
-
-    <h1>Loci Method Practice</h1>
-    <p>Assign a list of words to the furniture in this room.</p>
-
-    <div class="room-container">
-        <div id="spot1" class="furniture">Wardrobe<br><span id="item1" class="memory-item"></span></div>
-        <div id="spot2" class="furniture">Bed<br><span id="item2" class="memory-item"></span></div>
-        <div id="spot3" class="furniture">Desk<br><span id="item3" class="memory-item"></span></div>
-        <div id="spot4" class="furniture">Chair<br><span id="item4" class="memory-item"></span></div>
+    <h1>Level 1: The Entryway</h1>
+    <p>Memorize 3 items. Click "Hide" then click the boxes to check.</p>
+    
+    <div class="map">
+        <div id="s1" class="spot" onclick="this.classList.toggle('hidden')">Apple</div>
+        <div id="s2" class="spot" onclick="this.classList.toggle('hidden')">Book</div>
+        <div id="s3" class="spot" onclick="this.classList.toggle('hidden')">Coin</div>
     </div>
 
-    <div class="input-area">
-        <input type="text" id="wordInput" placeholder="Enter 4 items (comma separated)">
-        <button onclick="placeItems()">Place in Room</button>
-        <button onclick="hideItems()" style="background:#5f6368">Hide & Test</button>
-    </div>
+    <button onclick="hideAll()">Hide All</button>
+    <button onclick="window.location.href='level2.html'">Go to Level 2 →</button>
 
     <script>
-        function placeItems() {
-            const words = document.getElementById('wordInput').value.split(',');
-            for(let i=1; i<=4; i++) {
-                document.getElementById('item' + i).innerText = words[i-1] ? words[i-1].trim() : '';
-                document.getElementById('item' + i).style.display = 'block';
-            }
-        }
-        function hideItems() {
-            for(let i=1; i<=4; i++) {
-                document.getElementById('item' + i).style.display = 'none';
-            }
-            alert("Items hidden! Walk through the room in your mind and name them.");
+        function hideAll() {
+            document.querySelectorAll('.spot').forEach(s => s.classList.add('hidden'));
         }
     </script>
 </body>
