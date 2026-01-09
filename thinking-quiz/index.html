@@ -1,1 +1,194 @@
-<html></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inner Thinking Style Quiz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        h1 { color: #1a73e8; text-align: center; margin-bottom: 5px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; }
+        .question { margin-bottom: 25px; padding: 15px; border-radius: 8px; background: #fff; border: 1px solid #eee; }
+        .question p { font-weight: bold; margin-bottom: 12px; color: #2c3e50; }
+        label { display: block; margin-bottom: 10px; cursor: pointer; padding: 10px; border-radius: 6px; transition: 0.2s; border: 1px solid transparent; }
+        label:hover { background-color: #f8f9fa; border-color: #dadce0; }
+        input[type="radio"] { margin-right: 12px; transform: scale(1.2); cursor: pointer;}
+        .btn-container { display: flex; gap: 10px; margin-top: 20px; }
+        button {
+            flex: 1;
+            padding: 15px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #1557b0; }
+        .secondary-btn { background-color: #5f6368; }
+        .secondary-btn:hover { background-color: #3c4043; }
+        
+        #resultArea {
+            display: none;
+            margin-top: 20px;
+        }
+        .result-card {
+            padding: 20px;
+            background-color: #e8f0fe;
+            border-left: 6px solid #1a73e8;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .result-title { font-size: 20px; font-weight: bold; color: #174ea6; margin-bottom: 8px; }
+        .mix-badge { 
+            background: #fbbc04; 
+            color: #000; 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 14px; 
+            display: inline-block; 
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="quizArea">
+        <h1>How Do You Think?</h1>
+        <p class="subtitle">Based on the modes of inner experience.</p>
+        
+        <form id="quizForm">
+            <div class="question">
+                <p>1. You realize you’ve misplaced your keys. What happens first?</p>
+                <label><input type="radio" name="q1" value="A"> I hear myself narrating: "Where are they?"</label>
+                <label><input type="radio" name="q1" value="B"> I see a mental snapshot of where I last saw them.</label>
+                <label><input type="radio" name="q1" value="C"> I feel a jolt of panic or a "pull" toward a spot.</label>
+                <label><input type="radio" name="q1" value="D"> I feel the weight of the keys or hear them clinking.</label>
+                <label><input type="radio" name="q1" value="E"> I just "know" they are gone; no sounds or images.</label>
+            </div>
+
+            <div class="question">
+                <p>2. Imagine a bright red apple. What do you "see"?</p>
+                <label><input type="radio" name="q2" value="A"> No image, but I describe it to myself in words.</label>
+                <label><input type="radio" name="q2" value="B"> A clear, vivid 3D image with colors and shadows.</label>
+                <label><input type="radio" name="q2" value="C"> An emotional reaction (freshness or hunger).</label>
+                <label><input type="radio" name="q2" value="D"> The mental taste or the feel of the waxy skin.</label>
+                <label><input type="radio" name="q2" value="E"> The concept of an apple, but the screen is black.</label>
+            </div>
+
+            <div class="question">
+                <p>3. Preparing for a difficult conversation. How do you do it?</p>
+                <label><input type="radio" name="q3" value="A"> I rehearse the "script" of the talk in my head.</label>
+                <label><input type="radio" name="q3" value="B"> I visualize the room and the other person's face.</label>
+                <label><input type="radio" name="q3" value="C"> I focus on the "vibe" or the emotional weight.</label>
+                <label><input type="radio" name="q3" value="D"> I imagine the physical sounds or physical tension.</label>
+                <label><input type="radio" name="q3" value="E"> I understand the points without "playing" it out.</label>
+            </div>
+
+            <div class="question">
+                <p>4. Think of your favorite song. What's the experience?</p>
+                <label><input type="radio" name="q4" value="A"> I "hear" the lyrics as if I am reciting them.</label>
+                <label><input type="radio" name="q4" value="B"> I see the music video or album artwork.</label>
+                <label><input type="radio" name="q4" value="C"> The song gives me a specific mood or energy.</label>
+                <label><input type="radio" name="q4" value="D"> I hear the instruments vividly like headphones are on.</label>
+                <label><input type="radio" name="q4" value="E"> I know the song's facts, but I don't "hear" it.</label>
+            </div>
+
+            <button type="button" id="submitBtn">Analyze My Thinking</button>
+        </form>
+    </div>
+
+    <div id="resultArea">
+        <div id="mixHeader"></div>
+        <h2>Your Thinking Profile</h2>
+        <div id="resultsList"></div>
+        
+        <div class="btn-container">
+            <button class="secondary-btn" id="backBtn">Back to Quiz</button>
+            <button id="resetBtn">Reset Everything</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const resultsMap = {
+        A: { title: "The Internal Voice", desc: "You are a verbal thinker. Your thoughts are primarily a narration or a conversation with yourself." },
+        B: { title: "The Visual Thinker", desc: "Your mind works like a camera. You process information through images, maps, and mental movies." },
+        C: { title: "The Feeling Thinker", desc: "You process life through emotional responses and 'gut' feelings rather than symbols." },
+        D: { title: "The Sensory Thinker", desc: "Your inner world is physical. You re-experience the world through imagined touch, sound, and taste." },
+        E: { title: "The Unsymbolized Thinker", desc: "You think in 'pure' concepts. You don't need a voice or an image to process information." }
+    };
+
+    const submitBtn = document.getElementById('submitBtn');
+    const backBtn = document.getElementById('backBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    submitBtn.addEventListener('click', function() {
+        const form = document.getElementById('quizForm');
+        const formData = new FormData(form);
+        const scores = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+        let count = 0;
+
+        for (let value of formData.values()) {
+            scores[value]++;
+            count++;
+        }
+
+        if (count < 4) {
+            alert("Please select an answer for all 4 questions.");
+            return;
+        }
+
+        const maxScore = Math.max(...Object.values(scores));
+        const winners = Object.keys(scores).filter(key => scores[key] === maxScore);
+
+        const resultsList = document.getElementById('resultsList');
+        const mixHeader = document.getElementById('mixHeader');
+        resultsList.innerHTML = '';
+        mixHeader.innerHTML = '';
+
+        if (winners.length > 1) {
+            mixHeader.innerHTML = '<span class="mix-badge">Mixed Thinking Style Detected</span>';
+        }
+
+        winners.forEach(type => {
+            const div = document.createElement('div');
+            div.className = 'result-card';
+            div.innerHTML = `<div class="result-title">${resultsMap[type].title}</div>
+                             <div>${resultsMap[type].desc}</div>`;
+            resultsList.appendChild(div);
+        });
+
+        document.getElementById('quizArea').style.display = 'none';
+        document.getElementById('resultArea').style.display = 'block';
+    });
+
+    backBtn.addEventListener('click', function() {
+        document.getElementById('quizArea').style.display = 'block';
+        document.getElementById('resultArea').style.display = 'none';
+    });
+
+    resetBtn.addEventListener('click', function() {
+        location.reload();
+    });
+</script>
+
+</body>
+</html>
