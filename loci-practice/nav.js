@@ -21,7 +21,7 @@ const menuStyles = `
     }
     .side-menu a {
         padding: 15px 25px; text-decoration: none; font-size: 18px;
-        color: #818181; display: block; transition: 0.3s;
+        color: #818181; display: block; transition: 0.1s;
     }
     .side-menu a:hover { color: #f1f1f1; background: #222; }
     .side-menu .closebtn {
