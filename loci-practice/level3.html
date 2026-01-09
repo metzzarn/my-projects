@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loci Level 3</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; background: #fdf2f8; color: #1e293b; padding: 20px; }
+        .map { 
+            width: 100%; max-width: 600px; height: 500px; 
+            border: 3px solid #be185d; margin: 20px auto; 
+            position: relative; background: #fff; border-radius: 15px;
+            background-image: radial-gradient(#fbcfe8 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .spot { 
+            position: absolute; width: 80px; height: 60px; 
+            background: #fce7f3; border: 2px solid #f472b6; 
+            border-radius: 8px; cursor: pointer; display: flex; 
+            align-items: center; justify-content: center; font-size: 13px; font-weight: bold;
+            transition: all 0.2s;
+        }
+        /* Locations spread across the "House" */
+        #s1 { top: 20px; left: 20px; }    /* Kitchen Sink */
+        #s2 { top: 20px; left: 250px; }   /* Stove */
+        #s3 { top: 20px; right: 20px; }   /* Pantry */
+        #s4 { top: 220px; left: 100px; }  /* Dining Table */
+        #s5 { top: 220px; right: 100px; } /* Sideboard */
+        #s6 { bottom: 20px; left: 20px; }  /* Back Door */
+        #s7 { bottom: 20px; left: 250px; } /* Patio Chair */
+        #s8 { bottom: 20px; right: 20px; } /* Garden Shed */
+
+        .hidden { color: transparent !important; background: #334155 !important; border-color: #0f172a !important; }
+        .controls { margin-top: 20px; }
+        button { padding: 12px 20px; margin: 5px; cursor: pointer; border-radius: 8px; border: none; font-weight: bold; }
+        .btn-hide { background: #be185d; color: white; }
+        .btn-nav { background: #64748b; color: white; }
+        .btn-rand { background: #10b981; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Level 3: The Full House</h1>
+    <p>8 locations. Create a "story" that connects these items as you walk the route.</p>
+    
+    <div class="map" id="gameMap">
+        <div id="s1" class="spot" onclick="reveal(this)">Sink</div>
+        <div id="s2" class="spot" onclick="reveal(this)">Stove</div>
+        <div id="s3" class="spot" onclick="reveal(this)">Pantry</div>
+        <div id="s4" class="spot" onclick="reveal(this)">Table</div>
+        <div id="s5" class="spot" onclick="reveal(this)">Cabinet</div>
+        <div id="s6" class="spot" onclick="reveal(this)">Door</div>
+        <div id="s7" class="spot" onclick="reveal(this)">Chair</div>
+        <div id="s8" class="spot" onclick="reveal(this)">Shed</div>
+    </div>
+
+    <div class="controls">
+        <button class="btn-rand" onclick="randomizeWords()">Randomize Items</button>
+        <button class="btn-hide" onclick="hideAll()">Hide & Start Test</button>
+        <br><br>
+        <button class="btn-nav" onclick="window.location.href='level2.html'">← Back to Level 2</button>
+    </div>
+
+    <script>
+        const wordBank = ["Elephant", "Spaceship", "Ice Cream", "Umbrella", "Golden Ring", "Basketball", "Sunglasses", "Cactus", "Laptop", "Pizza", "Guitar", "Flashlight"];
+
+        function randomizeWords() {
+            const shuffled = [...wordBank].sort(() => 0.5 - Math.random());
+            const spots = document.querySelectorAll('.spot');
+            spots.forEach((spot, index) => {
+                spot.innerText = shuffled[index];
+                spot.classList.remove('hidden');
+            });
+        }
+
+        function hideAll() {
+            document.querySelectorAll('.spot').forEach(s => s.classList.add('hidden'));
+        }
+
+        function reveal(el) {
+            el.classList.remove('hidden');
+        }
+
+        // Initialize with random words on load
+        window.onload = randomizeWords;
+    </script>
+</body>
+</html>
