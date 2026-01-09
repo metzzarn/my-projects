@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loci Level 2</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #e8f4f8; }
+        .map { width: 400px; height: 400px; border: 2px solid #333; margin: 20px auto; position: relative; background: #fff; }
+        .spot { position: absolute; width: 70px; height: 70px; background: #ddd; border: 1px solid #999; cursor: pointer; font-size: 12px; }
+        #s1 { top: 10px; left: 10px; }   /* Sofa */
+        #s2 { top: 10px; right: 10px; }  /* TV */
+        #s3 { middle: 50%; left: 165px; } /* Coffee Table */
+        #s4 { bottom: 10px; left: 10px; } /* Plant */
+        #s5 { bottom: 10px; right: 10px; } /* Lamp */
+        .hidden { color: transparent; background: #333; }
+        button { padding: 10px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Level 2: The Living Room</h1>
+    <p>5 items to place in your mental route.</p>
+    
+    <div class="map">
+        <div id="s1" class="spot" onclick="this.classList.toggle('hidden')">Tiger</div>
+        <div id="s2" class="spot" onclick="this.classList.toggle('hidden')">Guitar</div>
+        <div id="s3" class="spot" onclick="this.classList.toggle('hidden')">Pizza</div>
+        <div id="s4" class="spot" onclick="this.classList.toggle('hidden')">Clock</div>
+        <div id="s5" class="spot" onclick="this.classList.toggle('hidden')">Bottle</div>
+    </div>
+
+    <button onclick="hideAll()">Hide All</button>
+    <button onclick="window.location.href='index.html'">← Back to Level 1</button>
+    <button onclick="window.location.href='level3.html'">Go to Level 3 →</button>
+
+    <script>
+        function hideAll() {
+            document.querySelectorAll('.spot').forEach(s => s.classList.add('hidden'));
+        }
+    </script>
+</body>
+</html>
